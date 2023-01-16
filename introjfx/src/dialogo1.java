@@ -13,22 +13,26 @@ public class dialogo1 {
         double peso = Double.parseDouble(JOptionPane.showInputDialog("Ingresa tu peso: "));
         double altura = Double.parseDouble(JOptionPane.showInputDialog("Ingresa tu altura:"));
 
-        if(peso < 0.0 || altura <= 0.0 ){
-            throw new ArithmeticException("El peso o la altura ingresados son incorrectos");
+        if(altura == 0.0 ){
+            throw new ArithmeticException("La altura ingresada es incorrecta");
         }
+
 
         double imc = 0;
 
         try{
             imc = peso/Math.pow(altura,2);
+
         } catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error: " + e);
+            //JOptionPane.showMessageDialog(null, "Error: " + e);
             imc = -54;
+            System.out.println(imc);
             System.out.println("Error: " + e);
         }
 
 
         //imc = peso/Math.pow(altura,2);
+        System.out.println(imc);
         JOptionPane.showMessageDialog(null, "Su imc es: " + imc);
     }
 }
