@@ -17,12 +17,14 @@ public class conexion2 {
             Statement s = conexion.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM PROFESORES");
 
+
             while(rs.next()){
                 System.out.println( rs.getInt("cedula") + " " + rs.getString("nombre")
                         +" PERTENECE AL DEPARTAMENTO DE: " + rs.getString("departamento") );
                 cadena += Integer.toString(rs.getInt("cedula")) + " " + rs.getString("nombre") +" " + rs.getString("departamento") + "\n" ;
 
             }
+
 
             conexion.close();
         }catch (Exception ex){

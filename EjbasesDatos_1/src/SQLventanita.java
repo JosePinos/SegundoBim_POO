@@ -4,9 +4,8 @@ import java.awt.event.ActionListener;
 
 public class SQLventanita {
     private JPanel panel1;
-    //public JLabel lblDatos;
+    public JLabel lblDatos;
     private JButton mostrarDatosButton;
-    private JTable table1;
 
     public SQLventanita()
     {
@@ -16,7 +15,7 @@ public class SQLventanita {
             @Override
             public void actionPerformed(ActionEvent e) {
                 conexion2 cn = new conexion2();
-                //lblDatos.setText(cn.mostrarDatos());
+                lblDatos.setText(cn.mostrarDatos());
             }
         });
     }
