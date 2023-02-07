@@ -1,11 +1,8 @@
-import com.mysql.cj.jdbc.exceptions.SQLError;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.InputMismatchException;
 
 public class form {
     private JPanel panel1;
@@ -16,8 +13,11 @@ public class form {
     private JTextField txtCarrera;
     private JButton insertarDatosButton;
     private JButton mostrarDatosButton;
+    private JButton buscarButton;
+    private JButton actualizarButton;
 
     private PreparedStatement ps;
+
     public form(){
 
 
@@ -39,7 +39,7 @@ public class form {
                     ps = conn.prepareStatement("INSERT INTO estudiante(id, nombre, celular, correo, carrera) VALUES(?,?,?,?,?)" );
                     try{
 
-                        if( !txtID.getText().matches("[0-9]*") ){
+                        if( !txtID.getText().matches("[0-9]") ){
                             throw new SQLException("Ingresa bien los datos");
                         }
 
@@ -68,6 +68,89 @@ public class form {
                     System.out.println(f);
                 }
 
+            }
+        });
+
+
+
+        actualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn;
+
+                try{
+                    conn = getConnection();
+                    ps = conn.prepareStatement("UPDATE estudiante SET id = ?, nombre = ?, celular = ?, correo = ?, carrera = ? WHERE id ="+txtID.getText() );
+                    try{
+
+                        if( !txtID.getText().matches("[0-9]") ){
+                            throw new SQLException("Ingresa bien los datos");
+                        }
+
+                        ps.setString(1, txtID.getText());
+                        ps.setString(2, txtNombre.getText());
+                        ps.setString(3, txtCelular.getText());
+                        ps.setString(4, txtCorreo.getText());
+                        ps.setString(5, txtCarrera.getText());
+
+                    }catch (SQLException es){
+                        System.out.println("Error: " + es + "||||");
+                        JOptionPane.showMessageDialog(null,"Ingrese bien los datos");
+                    }
+
+
+                    System.out.println(ps);
+                    int res = ps.executeUpdate();
+
+                    if(res > 0){
+                        JOptionPane.showMessageDialog(null, "Persona modificada correctamente");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Persona no modificada");
+                    }
+                    conn.close();
+                }catch (HeadlessException | SQLException f){
+                    System.out.println(f);
+                }
+            }
+        });
+
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection conn;
+                ResultSet rs;
+                try{
+                    conn = getConnection();
+                    ps = conn.prepareStatement("SELECT * FROM estudiante WHERE id="+txtID.getText() );
+                    Statement s = conn.createStatement();
+                    rs = s.executeQuery("SELECT * FROM estudiante WHERE id="+txtID.getText() );
+
+                    ps.setString(1, txtID.getText());
+                    rs= ps.executeQuery();
+                    try{
+
+                        if( !txtID.getText().matches("[0-9]") ){
+                            throw new SQLException("Ingresa bien los datos");
+                        }
+
+
+                    }catch (SQLException es){
+                        System.out.println("Error: " + es + "||||");
+                        JOptionPane.showMessageDialog(null,"Ingrese bien los datos");
+                    }
+
+
+                    while(rs.next()){
+                        JOptionPane.showMessageDialog(null, rs.getInt("id") + "\n" + rs.getString(2)
+                                +"\n"+ rs.getString("celular") +"\n" +
+                                rs.getString("correo") + "\n"+
+                                rs.getString(5));
+                        //cadena += Integer.toString(rs.getInt("cedula")) + " " + rs.getString("nombre") +" " + rs.getString("departamento") + "\n" ;
+                    }
+                    conn.close();
+                }catch (HeadlessException | SQLException f){
+                    System.out.println(f);
+                }
             }
         });
     }//FIN DEL CONSTRUCTOR
