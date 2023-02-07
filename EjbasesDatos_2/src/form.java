@@ -173,17 +173,12 @@ public class form {
             ResultSet rs = s.executeQuery("SELECT * FROM estudiante");
 
             while(rs.next()){
-                /*
-                System.out.println( rs.getInt("id") + "\n" + rs.getString(2)
-                        +"\n"+ rs.getString("celular") +"\n" +
-                        rs.getString("correo") + "\n"+
-                        rs.getString(5) );
-                */
+
                 JOptionPane.showMessageDialog(null, rs.getInt("id") + "\n" + rs.getString(2)
                         +"\n"+ rs.getString("celular") +"\n" +
                         rs.getString("correo") + "\n"+
                         rs.getString(5));
-                //cadena += Integer.toString(rs.getInt("cedula")) + " " + rs.getString("nombre") +" " + rs.getString("departamento") + "\n" ;
+
             }
 
             conexion.close();
