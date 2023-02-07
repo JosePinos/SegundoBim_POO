@@ -1,5 +1,4 @@
 #INGREGRANTES
-#
-Pinos Jose
-Carapaz Miguel
-Panchi Jose
+#Pinos Jose
+#Carapaz Miguel
+#Panchi Jose
